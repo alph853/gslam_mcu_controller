@@ -18,4 +18,12 @@ constexpr float kRightKp = 0.4f;
 constexpr float kRightKi = 0.2f;
 constexpr std::uint32_t kTelemetryPeriodMs = 50u;
 
+constexpr std::uint8_t kSync0 = 0xAA;
+constexpr std::uint8_t kSync1 = 0x55;
+constexpr std::uint8_t kMotionCommandPacketId = 1;
+constexpr std::uint8_t kTelemetryPacketId = 2;
+constexpr std::uint8_t kHeartbeatPacketId = 3;
+constexpr std::size_t kMaxPayloadSize = 48;
+constexpr std::size_t kMaxFrameSize = 2 + 1 + 1 + 1 + kMaxPayloadSize + 2;
+
 }  // namespace app::config

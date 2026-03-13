@@ -1,12 +1,12 @@
 #pragma once
 
-#include <array>
-#include <cstddef>
 #include <cstdint>
+
+#include "config.hpp"
 
 namespace app {
 
-struct CmdVel {
+struct MotionCommand {
   float v_mps = 0.0f;
   float w_radps = 0.0f;
 };
@@ -31,7 +31,7 @@ struct TelemetryData {
   std::uint32_t timestamp_ms = 0;
   WheelSpeeds wheel_speeds{};
   Pose2D pose{};
-  CmdVel commanded{};
+  MotionCommand commanded{};
   std::uint32_t fault_flags = 0;
 };
 
@@ -41,36 +41,22 @@ enum FaultFlags : std::uint32_t {
   kFaultProtocol = 1u << 1,
 };
 
-enum class PacketType : std::uint8_t {
-  kCmdVel = 1,
-  kTelemetry = 2,
-  kHeartbeat = 3,
-};
-
-struct CmdVelPacket {
-  float v_mps;
-  float w_radps;
-};
-
-struct TelemetryPacket {
+struct HeartbeatPacket {
+  std::uint8_t sync0;
+  std::uint8_t sync1;
+  std::uint8_t packet_id;
+  std::uint8_t payload_size;
+  std::uint8_t sequence;
   std::uint32_t timestamp_ms;
-  float left_mps;
-  float right_mps;
-  float x_m;
-  float y_m;
-  float theta_rad;
-};
+  std::uint16_t crc16;
+} __attribute__((packed));
 
-constexpr std::uint8_t kSync0 = 0xAA;
-constexpr std::uint8_t kSync1 = 0x55;
-constexpr std::size_t kMaxPayloadSize = 48;
-constexpr std::size_t kMaxFrameSize = 2 + 1 + 1 + 1 + kMaxPayloadSize + 2;
+static_assert(sizeof(HeartbeatPacket) == 11, "Unexpected HeartbeatPacket size");
 
-struct DecodedPacket {
-  PacketType type = PacketType::kTelemetry;
+struct DecodedFrame {
+  std::uint8_t packet_id = 0;
   std::uint8_t sequence = 0;
-  std::uint8_t length = 0;
-  std::array<std::uint8_t, kMaxPayloadSize> payload{};
+  std::uint8_t payload_size = 0;
 };
 
 enum class RobotState {
@@ -79,5 +65,4 @@ enum class RobotState {
   kRunning,
   kSafeStop,
 };
-
 }  // namespace app

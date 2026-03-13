@@ -24,33 +24,20 @@ std::uint16_t Crc16(const std::uint8_t *data, std::size_t size)
   return crc;
 }
 
-bool EncodeFrame(PacketType type,
-                 std::uint8_t sequence,
-                 const void *payload,
-                 std::uint8_t payload_size,
-                 std::array<std::uint8_t, kMaxFrameSize> &frame,
-                 std::size_t &frame_size)
+void EncodeFrame(const TelemetryData &telemetry, std::uint8_t sequence, TelemetryPacket &packet)
 {
-  if (payload_size > kMaxPayloadSize)
-  {
-    return false;
-  }
-
-  frame[0] = kSync0;
-  frame[1] = kSync1;
-  frame[2] = static_cast<std::uint8_t>(type);
-  frame[3] = payload_size;
-  frame[4] = sequence;
-  if ((payload != nullptr) && (payload_size > 0u))
-  {
-    std::memcpy(frame.data() + 5, payload, payload_size);
-  }
-
-  const std::uint16_t crc = Crc16(frame.data(), 5u + payload_size);
-  frame[5u + payload_size] = (std::uint8_t)(crc & 0xFFu);
-  frame[6u + payload_size] = (std::uint8_t)(crc >> 8);
-  frame_size = 7u + payload_size;
-  return true;
+  packet.sync0 = config::kSync0;
+  packet.sync1 = config::kSync1;
+  packet.packet_id = config::kTelemetryPacketId;
+  packet.payload_size = (std::uint8_t)(sizeof(TelemetryPacket) - 7u);
+  packet.sequence = sequence;
+  packet.timestamp_ms = telemetry.timestamp_ms;
+  packet.left_mps = telemetry.wheel_speeds.left_mps;
+  packet.right_mps = telemetry.wheel_speeds.right_mps;
+  packet.x_m = telemetry.pose.x_m;
+  packet.y_m = telemetry.pose.y_m;
+  packet.theta_rad = telemetry.pose.theta_rad;
+  packet.crc16 = Crc16(reinterpret_cast<const std::uint8_t *>(&packet), sizeof(TelemetryPacket) - sizeof(packet.crc16));
 }
 
 }  // namespace
@@ -62,20 +49,10 @@ void TelemetryTransmitter::MaybeSend(std::uint32_t now_ms, const TelemetryData &
     return;
   }
 
-  TelemetryPacket packet{
-      telemetry.timestamp_ms,
-      telemetry.wheel_speeds.left_mps,
-      telemetry.wheel_speeds.right_mps,
-      telemetry.pose.x_m,
-      telemetry.pose.y_m,
-      telemetry.pose.theta_rad,
-  };
-
-  std::array<std::uint8_t, kMaxFrameSize> frame{};
-  std::size_t frame_size = 0;
-  if (EncodeFrame(PacketType::kTelemetry, sequence_++, &packet, sizeof(packet), frame, frame_size))
+  TelemetryPacket packet{};
+  EncodeFrame(telemetry, sequence_++, packet);
+  if (BspUart_Write(reinterpret_cast<const std::uint8_t *>(&packet), sizeof(packet)))
   {
-    BspUart_Write(frame.data(), (std::uint16_t)frame_size);
     last_tx_ms_ = now_ms;
   }
 }

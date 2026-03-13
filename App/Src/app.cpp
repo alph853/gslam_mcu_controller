@@ -36,7 +36,7 @@ void App::RunSlowTick()
 
 void App::OnUartRxByte(std::uint8_t byte)
 {
-  CmdVel command{};
+  MotionCommand command{};
   if (command_receiver_.OnByte(byte, command))
   {
     drive_controller_.SetCommand(command, BspTime_NowMs());

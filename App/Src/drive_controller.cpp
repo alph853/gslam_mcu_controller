@@ -12,15 +12,7 @@ namespace {
 
 float Clamp(float value, float min_value, float max_value)
 {
-  if (value < min_value)
-  {
-    return min_value;
-  }
-  if (value > max_value)
-  {
-    return max_value;
-  }
-  return value;
+  return (value < min_value) ? min_value : (value > max_value) ? max_value : value;
 }
 
 float Slew(float target, float previous, float max_delta)
@@ -62,7 +54,7 @@ void DriveController::Init(std::uint32_t now_ms)
   state_ = RobotState::kIdle;
 }
 
-void DriveController::SetCommand(const CmdVel &command, std::uint32_t now_ms)
+void DriveController::SetCommand(const MotionCommand &command, std::uint32_t now_ms)
 {
   latest_command_ = command;
   last_command_ms_ = now_ms;
@@ -72,7 +64,8 @@ void DriveController::SetCommand(const CmdVel &command, std::uint32_t now_ms)
 void DriveController::FastTick(std::uint32_t now_ms, float dt_seconds)
 {
   const bool command_timed_out = IsCommandTimedOut(now_ms);
-  const CmdVel shaped = LimitCommand(command_timed_out ? CmdVel{} : latest_command_, dt_seconds);
+  const MotionCommand shaped = LimitCommand(command_timed_out ? MotionCommand{} : latest_command_,
+                                            dt_seconds);
   const WheelTargets targets = BodyToWheelTargets(shaped);
   const WheelSpeeds wheel_speeds =
       EstimateWheelSpeeds(BspEncoder_GetLeftCount(), BspEncoder_GetRightCount(), dt_seconds);
@@ -130,7 +123,7 @@ const TelemetryData &DriveController::telemetry() const
   return telemetry_;
 }
 
-WheelTargets DriveController::BodyToWheelTargets(const CmdVel &cmd) const
+WheelTargets DriveController::BodyToWheelTargets(const MotionCommand &cmd) const
 {
   return WheelTargets{
       cmd.v_mps - 0.5f * config::kTrackWidthM * cmd.w_radps,
@@ -162,7 +155,7 @@ WheelSpeeds DriveController::EstimateWheelSpeeds(std::int32_t left_count,
   };
 }
 
-CmdVel DriveController::LimitCommand(const CmdVel &requested, float dt_seconds)
+MotionCommand DriveController::LimitCommand(const MotionCommand &requested, float dt_seconds)
 {
   limited_command_.v_mps = Slew(
       Clamp(requested.v_mps, -config::kMaxLinearSpeedMps, config::kMaxLinearSpeedMps),

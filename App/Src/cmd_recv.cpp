@@ -20,44 +20,50 @@ std::uint16_t Crc16(const std::uint8_t *data, std::size_t size)
   return crc;
 }
 
-bool TryDecodeFrame(const std::uint8_t *frame, std::size_t frame_size, DecodedPacket &packet)
+}  // namespace
+
+bool CommandReceiver::TryDecodeFrame(const std::uint8_t *frame,
+                                     std::size_t frame_size,
+                                     MotionCommand &command)
 {
-  if ((frame_size < 7u) || (frame[0] != kSync0) || (frame[1] != kSync1))
+  if ((frame_size < 7u) || (frame[0] != config::kSync0) || (frame[1] != config::kSync1))
   {
     return false;
   }
 
-  const std::uint8_t payload_size = frame[3];
-  if ((payload_size > kMaxPayloadSize) || (frame_size != (std::size_t)(7u + payload_size)))
+  DecodedFrame decoded{};
+  decoded.packet_id = frame[2];
+  decoded.payload_size = frame[3];
+  decoded.sequence = frame[4];
+
+  if ((decoded.payload_size > config::kMaxPayloadSize) || (frame_size != (std::size_t)(7u + decoded.payload_size)))
   {
     return false;
   }
 
-  const std::uint16_t expected_crc = Crc16(frame, 5u + payload_size);
-  const std::uint16_t actual_crc = (std::uint16_t)frame[5u + payload_size] |
-                                   ((std::uint16_t)frame[6u + payload_size] << 8);
+  const std::uint16_t expected_crc = Crc16(frame, 5u + decoded.payload_size);
+  const std::uint16_t actual_crc = (std::uint16_t)frame[5u + decoded.payload_size] |
+                                   ((std::uint16_t)frame[6u + decoded.payload_size] << 8);
   if (expected_crc != actual_crc)
   {
     return false;
   }
 
-  packet.type = static_cast<PacketType>(frame[2]);
-  packet.length = payload_size;
-  packet.sequence = frame[4];
-  if (payload_size > 0u)
+  if ((decoded.packet_id != config::kMotionCommandPacketId) ||
+      (decoded.payload_size != sizeof(MotionCommand)))
   {
-    std::memcpy(packet.payload.data(), frame + 5, payload_size);
+    return false;
   }
+
+  std::memcpy(&command, frame + 5, sizeof(command));
   return true;
 }
 
-}  // namespace
-
-bool CommandReceiver::OnByte(std::uint8_t byte, CmdVel &command)
+bool CommandReceiver::OnByte(std::uint8_t byte, MotionCommand &command)
 {
   if (index_ == 0u)
   {
-    if (byte != kSync0)
+    if (byte != config::kSync0)
     {
       return false;
     }
@@ -67,7 +73,7 @@ bool CommandReceiver::OnByte(std::uint8_t byte, CmdVel &command)
 
   if (index_ == 1u)
   {
-    if (byte != kSync1)
+    if (byte != config::kSync1)
     {
       index_ = 0u;
       return false;
@@ -80,7 +86,7 @@ bool CommandReceiver::OnByte(std::uint8_t byte, CmdVel &command)
   if (index_ == 4u)
   {
     expected_size_ = 7u + frame_[3];
-    if (expected_size_ > kMaxFrameSize)
+    if (expected_size_ > config::kMaxFrameSize)
     {
       index_ = 0u;
       expected_size_ = 0u;
@@ -90,21 +96,10 @@ bool CommandReceiver::OnByte(std::uint8_t byte, CmdVel &command)
 
   if ((expected_size_ != 0u) && (index_ == expected_size_))
   {
-    DecodedPacket packet{};
-    const bool decoded = TryDecodeFrame(frame_.data(), expected_size_, packet);
+    const bool decoded = TryDecodeFrame(frame_.data(), expected_size_, command);
     index_ = 0u;
     expected_size_ = 0u;
-
-    if ((!decoded) || (packet.type != PacketType::kCmdVel) || (packet.length != sizeof(CmdVelPacket)))
-    {
-      return false;
-    }
-
-    CmdVelPacket wire{};
-    std::memcpy(&wire, packet.payload.data(), sizeof(wire));
-    command.v_mps = wire.v_mps;
-    command.w_radps = wire.w_radps;
-    return true;
+    return decoded;
   }
 
   return false;
