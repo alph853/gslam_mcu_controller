@@ -10,12 +10,21 @@ namespace app {
 
 class App {
 public:
-  /** @brief Initialize BSP-backed application services and state. */
+  /** 
+   * @brief Initialize BSP-backed application services and state. 
+   */
   void Init();
-  /** @brief Execute one fast control-cycle iteration. */
+
+  /** 
+   * @brief Execute one fast control-cycle iteration. 
+   */
   void RunFastTick();
-  /** @brief Execute one slow background iteration. */
+
+  /** 
+   * @brief Execute one slow background iteration. 
+   */
   void RunSlowTick();
+
   /**
    * @brief Feed one received UART byte into the command path.
    * @param byte Received UART byte.

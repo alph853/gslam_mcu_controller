@@ -8,8 +8,11 @@ namespace app {
 
 class PIController {
 public:
-  /** @brief Construct a PI controller with fixed proportional and integral gains. */
+  /** 
+   * @brief Construct a PI controller with fixed proportional and integral gains. 
+   */
   PIController(float kp, float ki);
+
   /**
    * @brief Update the controller output from a target, measurement, and timestep.
    * @param target Target value for the controlled quantity.
@@ -17,7 +20,10 @@ public:
    * @param dt_seconds Control timestep in seconds.
    */
   float Update(float target, float measured, float dt_seconds);
-  /** @brief Clear the controller integrator state. */
+
+  /**
+   * @brief Clear the controller integrator state. 
+   */
   void Reset();
 
 private:
@@ -36,12 +42,14 @@ public:
    * @param now_ms Current system time in milliseconds.
    */
   void Init(std::uint32_t now_ms);
+
   /**
    * @brief Update the latest motion command and freshness timestamp.
    * @param command Latest motion command.
    * @param now_ms Current system time in milliseconds.
    */
   void SetCommand(const MotionCommand &command, std::uint32_t now_ms);
+
   /**
    * @brief Run one full drive-control update for the current control tick.
    * @param now_ms Current system time in milliseconds.
@@ -49,15 +57,19 @@ public:
    */
   void FastTick(std::uint32_t now_ms, float dt_seconds);
 
+
   /** @brief Return whether any valid command has been received yet. */
   bool HasSeenCommand() const;
+
   /**
    * @brief Return whether the latest command is stale at the given time.
    * @param now_ms Current system time in milliseconds.
    */
   bool IsCommandTimedOut(std::uint32_t now_ms) const;
+
   /** @brief Return the current high-level drive state. */
   RobotState state() const;
+  
   /** @brief Return the most recent telemetry snapshot. */
   const TelemetryData &telemetry() const;
 
