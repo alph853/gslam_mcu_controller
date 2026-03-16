@@ -31,6 +31,8 @@ struct TelemetryData {
   std::uint32_t timestamp_ms = 0;
   WheelSpeeds wheel_speeds{};
   Pose2D pose{};
+  float battery_voltage_v = 0.0f;
+  std::uint8_t battery_percent = 0;
   MotionCommand commanded{};
   std::uint32_t fault_flags = 0;
 };

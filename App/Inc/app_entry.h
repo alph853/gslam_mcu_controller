@@ -20,12 +20,6 @@ void App_RunFastTick(void);
  */
 void App_RunSlowTick(void);
 
-/**
- * @brief Forward a received UART byte into the application protocol path.
- * @param byte Received UART byte.
- */
-void App_OnUartRxByte(unsigned char byte);
-
 #ifdef __cplusplus
 }
 #endif

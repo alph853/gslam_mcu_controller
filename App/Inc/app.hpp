@@ -25,12 +25,6 @@ public:
    */
   void RunSlowTick();
 
-  /**
-   * @brief Feed one received UART byte into the command path.
-   * @param byte Received UART byte.
-   */
-  void OnUartRxByte(std::uint8_t byte);
-
 private:
   bool initialized_ = false;
   DriveController drive_controller_{};

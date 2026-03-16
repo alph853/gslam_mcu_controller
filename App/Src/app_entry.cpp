@@ -22,8 +22,3 @@ extern "C" void App_RunSlowTick(void)
 {
   g_app.RunSlowTick();
 }
-
-extern "C" void App_OnUartRxByte(unsigned char byte)
-{
-  g_app.OnUartRxByte(byte);
-}

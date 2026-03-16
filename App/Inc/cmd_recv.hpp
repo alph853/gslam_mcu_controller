@@ -14,12 +14,12 @@ struct MotionCommandPacket {
   std::uint8_t packet_id;
   std::uint8_t payload_size;
   std::uint8_t sequence;
-  float v_mps;
-  float w_radps;
+  std::int16_t v_mmps;
+  std::int16_t w_mradps;
   std::uint16_t crc16;
 } __attribute__((packed));
 
-static_assert(sizeof(MotionCommandPacket) == 15, "Unexpected MotionCommandPacket size");
+static_assert(sizeof(MotionCommandPacket) == 11, "Unexpected MotionCommandPacket size");
 
 class CommandReceiver {
 public:

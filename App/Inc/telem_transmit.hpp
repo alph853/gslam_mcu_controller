@@ -13,11 +13,14 @@ struct TelemetryPacket {
   std::uint8_t payload_size;
   std::uint8_t sequence;
   std::uint32_t timestamp_ms;
-  float left_mps;
-  float right_mps;
-  float x_m;
-  float y_m;
-  float theta_rad;
+  std::int16_t left_mmps;
+  std::int16_t right_mmps;
+  std::int32_t x_mm;
+  std::int32_t y_mm;
+  std::int32_t theta_mrad;
+  std::uint16_t battery_mv;
+  std::uint8_t battery_percent;
+  std::uint8_t fault_flags;
   std::uint16_t crc16;
 } __attribute__((packed));
 

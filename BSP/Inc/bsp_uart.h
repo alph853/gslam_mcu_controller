@@ -9,8 +9,8 @@ extern "C" {
 #endif
 
 void BspUart_Init(void);
-void BspUart_ArmRxIT(void);
-uint8_t BspUart_GetRxByte(void);
+void BspUart_PollRx(void);
+bool BspUart_ReadByte(uint8_t *byte);
 bool BspUart_Write(const uint8_t *data, uint16_t size);
 void BspUart_OnTxComplete(void);
 

@@ -1,0 +1,20 @@
+/usr/include/newlib/c++/13.2.1/cmath:177:3:constexpr float std::cos(float)	16	static
+/usr/include/newlib/c++/13.2.1/cmath:400:3:constexpr float std::sin(float)	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:13:7:float app::{anonymous}::Clamp(float, float, float)	24	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:18:7:float app::{anonymous}::Slew(float, float, float)	24	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:25:1:app::PIController::PIController(float, float)	24	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:30:7:float app::PIController::Update(float, float, float)	32	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:37:6:void app::PIController::Reset()	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:42:1:app::DriveController::DriveController()	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:48:6:void app::DriveController::Init(uint32_t)	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:57:6:void app::DriveController::SetCommand(const app::MotionCommand&, uint32_t)	24	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:64:6:void app::DriveController::FastTick(uint32_t, float)	80	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:102:6:bool app::DriveController::HasSeenCommand() const	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:107:6:bool app::DriveController::IsCommandTimedOut(uint32_t) const	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:116:12:app::RobotState app::DriveController::state() const	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:121:22:const app::TelemetryData& app::DriveController::telemetry() const	16	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:126:14:app::WheelTargets app::DriveController::BodyToWheelTargets(const app::MotionCommand&) const	32	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:134:13:app::WheelSpeeds app::DriveController::EstimateWheelSpeeds(int32_t, int32_t, float)	56	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:158:15:app::MotionCommand app::DriveController::LimitCommand(const app::MotionCommand&, float)	40	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:171:6:void app::DriveController::UpdateOdometry(const app::WheelSpeeds&, float)	40	static
+/home/ttd/Projects/Embedded/gslam_controller/App/Src/drive_controller.cpp:183:6:void app::DriveController::UpdateSupervisor(bool)	16	static

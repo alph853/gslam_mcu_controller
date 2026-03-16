@@ -1,10 +1,11 @@
 #include "cmd_recv.hpp"
 
-#include <cstring>
-
 namespace app {
 
 namespace {
+
+constexpr float kMillimetersPerMeter = 1000.0f;
+constexpr float kMilliradiansPerRadian = 1000.0f;
 
 std::uint16_t Crc16(const std::uint8_t *data, std::size_t size)
 {
@@ -50,12 +51,14 @@ bool CommandReceiver::TryDecodeFrame(const std::uint8_t *frame,
   }
 
   if ((decoded.packet_id != config::kMotionCommandPacketId) ||
-      (decoded.payload_size != sizeof(MotionCommand)))
+      (decoded.payload_size != (sizeof(MotionCommandPacket) - 7u)))
   {
     return false;
   }
 
-  std::memcpy(&command, frame + 5, sizeof(command));
+  const auto *packet = reinterpret_cast<const MotionCommandPacket *>(frame);
+  command.v_mps = (float)packet->v_mmps / kMillimetersPerMeter;
+  command.w_radps = (float)packet->w_mradps / kMilliradiansPerRadian;
   return true;
 }
 
