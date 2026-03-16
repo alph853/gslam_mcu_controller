@@ -1,5 +1,0 @@
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_battery.c:18:13:ina219_write_u16	40	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_battery.c:32:13:ina219_read_u16	40	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_battery.c:50:16:voltage_to_percentage	24	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_battery.c:66:6:BspBattery_Init	8	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_battery.c:71:6:BspBattery_Read	24	static

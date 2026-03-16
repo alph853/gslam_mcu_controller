@@ -1,4 +1,0 @@
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_time.c:5:6:BspTime_Init	4	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_time.c:9:6:BspTime_StartControlTick	8	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_time.c:14:10:BspTime_NowMs	8	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_time.c:19:7:BspTime_ControlDtSeconds	4	static

@@ -1,6 +1,0 @@
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_motor.c:6:17:duty_to_compare	16	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_motor.c:20:13:set_half_bridge	32	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_motor.c:36:6:BspMotor_Init	8	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_motor.c:48:6:BspMotor_Enable	16	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_motor.c:54:6:BspMotor_SetLeftDuty	16	static
-/home/ttd/Projects/Embedded/gslam_controller/BSP/Src/bsp_motor.c:59:6:BspMotor_SetRightDuty	16	static

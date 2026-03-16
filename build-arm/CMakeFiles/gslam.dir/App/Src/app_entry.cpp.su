@@ -1,8 +1,0 @@
-/home/ttd/Projects/Embedded/gslam_controller/App/Inc/cmd_recv.hpp:24:7:constexpr app::CommandReceiver::CommandReceiver()	16	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Inc/telem_transmit.hpp:29:7:constexpr app::TelemetryTransmitter::TelemetryTransmitter()	16	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Inc/app.hpp:11:7:constexpr app::App::App()	16	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app_entry.cpp:11:17:void App_Init()	8	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app_entry.cpp:16:17:void App_RunFastTick()	8	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app_entry.cpp:21:17:void App_RunSlowTick()	8	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app_entry.cpp:24:1:void __static_initialization_and_destruction_0()	8	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app_entry.cpp:24:1:cpp)	8	static

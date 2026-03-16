@@ -1,6 +1,0 @@
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/telem_transmit.cpp:25:15:uint16_t app::{anonymous}::Crc16(const uint8_t*, std::size_t)	32	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/telem_transmit.cpp:39:6:void app::{anonymous}::EncodeFrame(const app::TelemetryData&, uint8_t, app::TelemetryPacket&)	32	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/telem_transmit.cpp:63:6:void app::TelemetryTransmitter::MaybeSend(uint32_t, const app::TelemetryData&)	56	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/telem_transmit.cpp:16:9:Integer app::{anonymous}::SaturateToInt(float, float) [with Integer = short unsigned int]	32	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/telem_transmit.cpp:16:9:Integer app::{anonymous}::SaturateToInt(float, float) [with Integer = short int]	32	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/telem_transmit.cpp:16:9:Integer app::{anonymous}::SaturateToInt(float, float) [with Integer = long int]	32	static

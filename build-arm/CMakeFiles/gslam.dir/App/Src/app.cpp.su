@@ -1,4 +1,0 @@
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app.cpp:13:6:void app::{anonymous}::ProcessPendingUart(app::CommandReceiver&, app::DriveController&)	32	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app.cpp:30:6:void app::App::Init()	24	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app.cpp:42:6:void app::App::RunFastTick()	24	static
-/home/ttd/Projects/Embedded/gslam_controller/App/Src/app.cpp:50:6:void app::App::RunSlowTick()	80	static
