@@ -10,18 +10,21 @@ namespace app {
 
 class App {
 public:
-  /** 
-   * @brief Initialize BSP-backed application services and state. 
+  /**
+   * @brief Initialize BSP-backed application services and runtime state.
    */
   void Init();
 
-  /** 
-   * @brief Execute one fast control-cycle iteration. 
+  /**
+   * @brief Execute one fast control-cycle iteration.
    */
   void RunFastTick();
 
-  /** 
-   * @brief Execute one slow background iteration. 
+  /**
+   * @brief Execute one slow background iteration.
+   *
+   * This drains pending UART RX bytes, updates slow-rate sensor readings, and
+   * sends telemetry when its period elapses.
    */
   void RunSlowTick();
 

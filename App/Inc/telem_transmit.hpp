@@ -6,6 +6,12 @@
 
 namespace app {
 
+/**
+ * @brief Fixed-point telemetry wire packet sent upstream over UART.
+ *
+ * Motion and pose values are quantized into millimeter and milliradian units to
+ * reduce payload size while preserving sufficient precision for the current robot.
+ */
 struct TelemetryPacket {
   std::uint8_t sync0;
   std::uint8_t sync1;

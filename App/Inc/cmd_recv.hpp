@@ -8,6 +8,12 @@
 
 namespace app {
 
+/**
+ * @brief Fixed-point motion command wire packet sent by the Jetson.
+ *
+ * The payload stores `v_mmps` and `w_mradps` to keep the command frame compact
+ * while the controller converts back to internal floating-point units.
+ */
 struct MotionCommandPacket {
   std::uint8_t sync0;
   std::uint8_t sync1;
@@ -31,6 +37,14 @@ public:
   bool OnByte(std::uint8_t byte, MotionCommand &command);
 
 private:
+  /**
+   * @brief Validate and decode one complete framed command packet.
+   * @param frame Pointer to the candidate frame bytes.
+   * @param frame_size Number of bytes in `frame`.
+   * @param command Decoded command output on success.
+   * @retval `true` when the frame is valid and `command` was updated.
+   * @retval `false` when framing, size, packet ID, or CRC validation fails.
+   */
   bool TryDecodeFrame(const std::uint8_t *frame, std::size_t frame_size, MotionCommand &command);
 
   std::array<std::uint8_t, config::kMaxFrameSize> frame_{};
